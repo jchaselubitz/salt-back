@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 2019_03_21_151621) do
   create_table "calendars", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -49,10 +51,12 @@ ActiveRecord::Schema.define(version: 2019_03_21_151621) do
 
   create_table "recipes", force: :cascade do |t|
     t.string "name"
-    t.string "instructions"
+    t.text "instructions"
     t.string "image"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,4 +68,6 @@ ActiveRecord::Schema.define(version: 2019_03_21_151621) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "calendars", "users"
+  add_foreign_key "recipes", "users"
 end
