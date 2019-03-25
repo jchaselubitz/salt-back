@@ -9,7 +9,6 @@ class Api::V001::UsersController < ApplicationController
 
   #Find problem here!!
   def profile
-    #  byebug
     render json: { user: UserSerializer.new(current_user) }, status: :accepted
   end
 
