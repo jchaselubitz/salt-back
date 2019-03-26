@@ -7,7 +7,7 @@ class Api::V001::UsersController < ApplicationController
     render json: @users
   end
 
-  #Find problem here!!
+ 
   def profile
     render json: { user: UserSerializer.new(current_user) }, status: :accepted
   end
