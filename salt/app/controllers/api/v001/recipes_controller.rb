@@ -6,8 +6,17 @@ class Api::V001::RecipesController < ApplicationController
   end
 
   def create 
-    @recipe = Recipe.create(name: recipe_params[:name], instructions: recipe_params[:instructions], image: recipe_params[:image])
-
+    @user = User.find_by(email: params[:user])
+    @recipe = Recipe.new(recipe_params,user_id: @user.id)
+    
+    if @recipe.valid?
+      @recipe.save
+      # render json: @recipe
+      print("RECIPE COOKED")
+    else
+      # render json: "recipe parameters invalid"
+      print("NO RECIPE")
+    end
     # params[:ingredients].map do |item|  
     #   @ingredient = Ingredient.find_or_create_by(name: item[:ingredient_name])
     #   @ingredient.update(category: item[:ingredient_category], have: false)
