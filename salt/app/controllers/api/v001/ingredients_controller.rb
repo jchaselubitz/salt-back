@@ -1,5 +1,5 @@
 class Api::V001::IngredientsController < ApplicationController
-  before_action :find_ingredient only: [:show, :edit, :update, :destroy]
+  before_action :find_ingredient #only: [:show, :edit, :update, :destroy]
 
   def index
     @ingredents = Ingredient.all 
@@ -22,7 +22,6 @@ class Api::V001::IngredientsController < ApplicationController
   end
 
   def find_ingredient
-    byebug
     @ingredient = Ingredient.find_by(id: params[:id])
   end
 
