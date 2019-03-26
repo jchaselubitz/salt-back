@@ -6,12 +6,13 @@ class Api::V001::CalendarsController < ApplicationController
   end
 
   def create
+   
     @calendar = Calendar.new(calendar_params)
-    params[:calendar][:recipes].map do |id|
-      RecipeCalendars.create(recipe_id: recipe_id[:id], calendar_id: @calendar.id)
-    end
     if @calendar.valid?
       @calendar.save
+      params[:calendar][:recipes].map do |id|
+        @RC = RecipeCalendar.create(recipe_id: id, calendar_id: @calendar.id)
+      end
       render json: @calendar
     else
       render json: "calendar parameters invalid"
