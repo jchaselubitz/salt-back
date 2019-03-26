@@ -7,6 +7,7 @@ class Api::V001::CalendarsController < ApplicationController
 
   def create
     #all needed params come through!
+    #attache user_id
     @calendar = Calendar.new(calendar_params)
     if @calendar.valid?
       @calendar.save
