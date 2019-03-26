@@ -6,16 +6,16 @@ class Api::V001::CalendarsController < ApplicationController
   end
 
   def create
-    #all needed params come through!
-    #attache user_id
     @calendar = Calendar.new(calendar_params)
+    params[:calendar][:recipes].map do |id|
+      RecipeCalendars.create(recipe_id: recipe_id[:id], calendar_id: @calendar.id)
+    end
     if @calendar.valid?
       @calendar.save
       render json: @calendar
     else
       render json: "calendar parameters invalid"
     end
-
 
   end
 
@@ -24,7 +24,7 @@ class Api::V001::CalendarsController < ApplicationController
 private
 
   def calendar_params
-    params.require(:calendar).permit(:start_date, :end_date, :user_id, index_calendars_on_user_id: [])
+    params.require(:calendar).permit(:start_date, :end_date, :user_id)
   end
 
 end 
