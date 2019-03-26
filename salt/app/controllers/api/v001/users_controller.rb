@@ -1,5 +1,6 @@
 class Api::V001::UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
+  
   skip_before_action :authorized, only: [:create]
 
   def index
