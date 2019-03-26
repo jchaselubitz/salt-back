@@ -1,17 +1,18 @@
 class ApplicationController < ActionController::API
-    # before_action :authorized
+  before_action :authorized
 
   def encode_token(payload)
     JWT.encode(payload, secret)
   end
 
-  def auth_header
+  def auth_headerd
+    # byebug
     request.headers['Authorization']
   end
 
   def decoded_token
-    if auth_header
-      token = auth_header #.split(' ')[1]  #[Bearer, <token>]
+    if auth_headerd
+      token = auth_headerd #.split(' ')[1]  #[Bearer, <token>]
       begin
         JWT.decode(token, secret, true, algorithm: 'HS256')
       rescue JWT::DecodeError
@@ -21,6 +22,7 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
+    
     if decoded_token
       user_id = decoded_token[0]['user_id']#[{ "user_id"=>"2" }, { "alg"=>"HS256" }]
       @user = User.find_by(id: user_id)
