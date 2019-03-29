@@ -17,10 +17,26 @@ class Api::V001::CalendarsController < ApplicationController
     else
       render json: "calendar parameters invalid"
     end
+  end
 
+  def update
+    @calendar = Calendar.find(params[:id])
+    @calendar.update(calendar_params)
+    if @calendar.valid?
+      render json: @calendar
+    else
+      render json: "Calendar parameters invalid"
+    end
   end
 
 
+    def destroy
+      
+      @calendar = Calendar.find(params[:id])
+      @calendar.destroy
+      render json: "deletion successful"
+    end
+  
 
 private
 
